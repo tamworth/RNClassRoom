@@ -8,7 +8,7 @@ import RCTRenderView from '../widgets/RCTRenderView';
 
 const config = {
   appId: '09c93e011d934eb0b4b71b5d8a4d3c4a',
-  token: '00609c93e011d934eb0b4b71b5d8a4d3c4aIABscekDe9SuRuyBXaV1IUshGqKoUYvtBEX5Uh+FEeUiPPLWKwwAAAAAEAB1KdkmySBlYgEAAQDIIGVi',
+  token: '00609c93e011d934eb0b4b71b5d8a4d3c4aIAAqHGbK3TUk8sRy/KO43hY4dStWsw11E98IoOhIY4WqxvLWKwwAAAAAEABCtiZwfotmYgEAAQB+i2Zi',
   channelName: 'sheenrn',
 };
 
@@ -62,7 +62,7 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
         (channel, uid, elapsed) => {
           console.log('JoinChannelSuccess', channel, uid, elapsed);
           // Set state variable to true
-          setJoined(true);
+          this.state.isJoined = true;
         }
       );
 
@@ -90,6 +90,10 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
     }
     return (<View style={styles.teacher} />);
   };
+
+  const renderTeacherView = () => {
+    //  =peerIds.indexOf(0)
+  }
 
   return (
     <View style={styles.container} >
@@ -130,11 +134,11 @@ const styles = StyleSheet.create({
   student: {
     height: 150,
     backgroundColor:'#ff00ff',
+    margin: 2,
   },
   padding: {
-    paddingVertical:2.5,
-    paddingHorizontal: 2.5,
-    paddingTop:2.5,
+    // paddingVertical:2.5,
+    paddingHorizontal: 2,
   },
 });
 

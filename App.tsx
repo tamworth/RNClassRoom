@@ -28,7 +28,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 // import RCTRenderView from './components/widgets/RCTRenderView';
-import ClassRoomContainer from './components/container/ClassRoomContainer';
+import BaseClassRoomContainer from './components/container/ClassRoomOneToOneContainer';
 
 
 const App = () => {
@@ -40,9 +40,9 @@ const App = () => {
   };
 
   return (
-    <View style={backgroundStyle}>
-      <ClassRoomContainer style={backgroundStyle} />
-    </View>
+    <SafeAreaView style={backgroundStyle}>
+      <BaseClassRoomContainer style={backgroundStyle} />
+    </SafeAreaView>
   );
 };
 
