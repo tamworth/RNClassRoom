@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-    View, 
-    StyleSheet,
-} from 'react-native';
+import {View, StyleSheet, ViewStyle, StyleProp} from 'react-native';
 
 interface Props {
+  style: StyleProp<ViewStyle>;
   uid: String;
   channelName: String;
 }

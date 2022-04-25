@@ -1,49 +1,68 @@
 import React from 'react';
 import {
-    View, 
-    Text, 
-    StyleSheet,
-    Image
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ViewStyle,
+  StyleProp,
 } from 'react-native';
-import RtcEngine, {
-    RtcLocalView,
-    RtcRemoteView,
-    VideoRenderMode,
-} from 'react-native-agora';
+import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
 
 interface Props {
+  style: StyleProp<ViewStyle>;
   uid: String;
   channelName: String;
+  volumeProgress: number;
 }
 
-const RCTRenderView: React.FC<Props> = ({style, uid, channelName}) => {
-
-const _renderLocalVideos = () => {
-  console.log('_renderLocalVideos', channelName, uid);
-  return <RtcLocalView.SurfaceView
-          style={styles.render}
-          channelId={channelName}
-          renderMode={VideoRenderMode.Hidden}
-          />
-};
-    
-const _renderRemoteVideos = () => {
-  return (<RtcRemoteView.SurfaceView
-            style={styles.render}
-            uid={uid}
-            channelId={channelName}
-            renderMode={VideoRenderMode.Hidden}
-            // zOrderMediaOverlay={true}
-            />);
+const RCTRenderView: React.FC<Props> = ({
+  style,
+  uid,
+  channelName,
+  volumeProgress,
+}) => {
+  const _renderLocalVideos = () => {
+    return (
+      <RtcLocalView.SurfaceView
+        style={styles.render}
+        channelId={channelName}
+        renderMode={VideoRenderMode.Hidden}
+      />
+    );
+  };
+  const _renderRemoteVideos = () => {
+    return (
+      <RtcRemoteView.SurfaceView
+        style={styles.render}
+        uid={uid}
+        channelId={channelName}
+        renderMode={VideoRenderMode.Hidden} 
+        // zOrderMediaOverlay={true}
+      />
+    );
   };
 
   const _renderBottom = () => {
+    let progress = volumeProgress == undefined ? 0.5 : volumeProgress;
+    let height = 10 * progress;
+    let top = 4 + (10 - height);
+    let additionStyle1 = {
+      top: top,
+      height: height,
+    };
+    let additionStyle2 = {
+      borderRadius: 5,
+    };
+    var additionStyle = progress < 1 ? additionStyle1 : additionStyle2;
     return (
       <View style={styles.bottom}>
-        <Image 
-          style={styles.image} 
-          source={require('./resource/ic_mic_status_on.png')}/>
-        <Text style={styles.text} >{'sheen'}</Text>
+        <Image
+          style={styles.image}
+          source={require('./resource/ic_mic_status_on.png')}
+        />
+        <Text style={styles.text}>{'sheen'}</Text>
+        <View style={[styles.volume, additionStyle]} />
       </View>
     );
   };
@@ -82,6 +101,16 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     flex: 1,
     color: '#ffffff',
+  },
+  volume: {
+    position: 'absolute',
+    top: 4,
+    left: 7,
+    height: 10,
+    width: 6,
+    backgroundColor: '#00ff00AA',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 });
 

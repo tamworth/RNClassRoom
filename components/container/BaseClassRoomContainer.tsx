@@ -1,9 +1,5 @@
-import React, {Component, useEffect, useRef, useState } from 'react';
-import {
-    View, 
-    ScrollView, 
-    StyleSheet
-} from 'react-native';
+import React, {Component} from 'react';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import RCTRenderView from '../widgets/RCTRenderView';
 import WhiteBoardView from '../widgets/WhiteBoardView';
 
@@ -16,82 +12,88 @@ const config = {
 import RtcEngine from 'react-native-agora';
 
 class BaseClassRoomContainer extends Component {
-    state = {
-        isJoined: false,
-        peerIds: [],
+  _engine: RtcEngine | undefined;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isJoined: false,
+      peerIds: [],
     };
-    _engine:RtcEngine = null;
+    this.initEngine();
+  }
 
-    constructor(props) {
-        super(props);
-        this.initEngine();
-    }
+  async initEngine() {
+    const {appId} = config;
+    let that = this
+    this._engine = await RtcEngine.create(appId);
+    await this._engine.enableVideo();
+    // await this._engine.enableAudioVolumeIndication(1, 3, true);
+    // await this._engine.enableAudio();
+    // await this._engine.enableLocalAudio(true);
+    that.startListenerAndJoin();
+  }
 
-    async initEngine() {
-        const { appId } = config;
-        let that = this
-        this._engine = await RtcEngine.create(appId);
-        await this._engine.enableVideo();
-        that.startListenerAndJoin();
-    }
+  startListenerAndJoin() {
+    this._engine.addListener('Warning', warn => {
+      console.log('Warning', warn);
+    });
 
-    startListenerAndJoin() {
-        this._engine.addListener('Warning', (warn) => {
-            console.log('Warning', warn);
+    this._engine.addListener('Error', err => {
+      console.log('Error', err);
+    });
+
+    this._engine.addListener('UserJoined', (uid, elapsed) => {
+      console.log('UserJoined', uid, elapsed);
+      // If new user
+      if (this.state.peerIds.indexOf(uid) === -1) {
+        // Add peer ID to state array
+        this.setState({
+          peerIds: [...this.state.peerIds, uid],
         });
+      }
+    });
 
-        this._engine.addListener('Error', (err) => {
-            console.log('Error', err);
-        });
+    this._engine.addListener('UserOffline', (uid, reason) => {
+      console.log('UserOffline', uid, reason);
+      // Remove peer ID from state array
+      this.setState({
+        peerIds: this.state.peerIds.filter((id) => id !== uid)
+      });
+    });
 
-        this._engine.addListener('UserJoined', (uid, elapsed) => {
-            console.log('UserJoined', uid, elapsed);
-            // If new user
-            if (peerIds.indexOf(uid) === -1) {
-                // Add peer ID to state array
-                this.setState({
-                    peerIds: (prev) => [...prev, uid]
-                });
-            }
-        });
+    // If Local user joins RTC channel
+    this._engine.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
+      console.log('JoinChannelSuccess', channel, uid, elapsed);
+      // Set state variable to true
+      this.setState({
+        isJoined: true,
+      });
+    });
 
-        this._engine.addListener('UserOffline', (uid, reason) => {
-            console.log('UserOffline', uid, reason);
-            // Remove peer ID from state array
-            this.setState({
-                peerIds: (prev) => prev.filter((id) => id !== uid)
-            });
-        });
+    this._engine?.addListener('AudioVolumeIndication', (speakers, totalVolume) => {
+        console.log('AudioVolumeIndication', totalVolume, speakers);
+    });
 
-      // If Local user joins RTC channel
-        this._engine.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
-            console.log('JoinChannelSuccess', channel, uid, elapsed);
-            // Set state variable to true
-            this.setState({
-                isJoined: true
-            });
-        });
-
-        // Join Channel using null token and channel name
-        this._engine.joinChannel(
-            config.token,
-            config.channelName,
-            null,
-            0);
-    }
+    // Join Channel using null token and channel name
+    this._engine.joinChannel(config.token, config.channelName, null, 0);
+  }
 
   renderLocalView() {
     console.log('isJoined', this.state.isJoined);
     if (this.state.isJoined) {
-            return (
-            <RCTRenderView style={styles.student} channelName={config.channelName}/> 
-            );
-        }
-        return (<View style={styles.student} />);
+      return (
+        <RCTRenderView
+          style={styles.student}
+          channelName={config.channelName}
+        />
+      );
     }
+    return (<View style={styles.student} />);
+  }
 
     renderWhiteBoard() {
-        return <WhiteBoardView style={styles.whiteBorder}/>
+        return (<WhiteBoardView style={styles.whiteBorder} />);
     }
 
     render() {
@@ -143,3 +145,7 @@ const styles = StyleSheet.create({
 });
 
 export default BaseClassRoomContainer;
+    function renderWhiteBoard() {
+        throw new Error('Function not implemented.');
+    }
+
