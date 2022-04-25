@@ -5,12 +5,8 @@ import {
   StyleSheet
 } from 'react-native';
 import RCTRenderView from '../widgets/RCTRenderView';
+import AccountConfig from '../config/AccountConfig';
 
-const config = {
-  appId: '09c93e011d934eb0b4b71b5d8a4d3c4a',
-  token: '00609c93e011d934eb0b4b71b5d8a4d3c4aIAAqHGbK3TUk8sRy/KO43hY4dStWsw11E98IoOhIY4WqxvLWKwwAAAAAEABCtiZwfotmYgEAAQB+i2Zi',
-  channelName: 'sheenrn',
-};
 
 interface Props {
   roomName: String;
@@ -29,20 +25,20 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
      * @description Function to initialize the Rtc Engine, attach event listeners and actions
      */
     const init = async () => {
-      const { appId } = config;
+      const { appId } = AccountConfig;
       _engine.current = await RtcEngine.create(appId);
       await _engine.current.enableVideo();
 
       _engine.current.addListener('Warning', (warn) => {
-        console.log('Warning', warn);
+        console.log('engine Warning', warn);
       });
 
       _engine.current.addListener('Error', (err) => {
-        console.log('Error', err);
+        console.log('engine Error', err);
       });
 
       _engine.current.addListener('UserJoined', (uid, elapsed) => {
-        console.log('UserJoined', uid, elapsed);
+        console.log('engine UserJoined', uid, elapsed);
         // If new user
         if (peerIds.indexOf(uid) === -1) {
           // Add peer ID to state array
@@ -51,7 +47,7 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
       });
 
       _engine.current.addListener('UserOffline', (uid, reason) => {
-        console.log('UserOffline', uid, reason);
+        console.log('engine UserOffline', uid, reason);
         // Remove peer ID from state array
         setPeerIds((prev) => prev.filter((id) => id !== uid));
       });
@@ -60,7 +56,7 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
       _engine.current.addListener(
         'JoinChannelSuccess',
         (channel, uid, elapsed) => {
-          console.log('JoinChannelSuccess', channel, uid, elapsed);
+          console.log('engine JoinChannelSuccess', channel, uid, elapsed);
           // Set state variable to true
           this.state.isJoined = true;
         }
@@ -69,12 +65,11 @@ const ClassRoomContainer: React.FC<Props> = (roomName) => {
       const startCall = async () => {
         // Join Channel using null token and channel name
         await _engine.current?.joinChannel(
-          config.token,
-          config.channelName,
+          AccountConfig.token,
+          AccountConfig.channelName,
           null,
           0
         );
-        console.log("startCall end")
       };
 
       startCall();

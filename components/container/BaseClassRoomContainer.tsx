@@ -2,12 +2,8 @@ import React, {Component} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import RCTRenderView from '../widgets/RCTRenderView';
 import WhiteBoardView from '../widgets/WhiteBoardView';
+import AccountConfig from '../config/AccountConfig';
 
-const config = {
-  appId: '09c93e011d934eb0b4b71b5d8a4d3c4a',
-  token: '00609c93e011d934eb0b4b71b5d8a4d3c4aIAAqHGbK3TUk8sRy/KO43hY4dStWsw11E98IoOhIY4WqxvLWKwwAAAAAEABCtiZwfotmYgEAAQB+i2Zi',
-  channelName: 'sheenrn',
-};
 
 import RtcEngine from 'react-native-agora';
 
@@ -19,32 +15,37 @@ class BaseClassRoomContainer extends Component {
     this.state = {
       isJoined: false,
       peerIds: [],
+      localAudioMute: false,
+      localVideoMute: false,
+      localVolumeValue: 0.5,
     };
     this.initEngine();
   }
 
   async initEngine() {
-    const {appId} = config;
-    let that = this
-    this._engine = await RtcEngine.create(appId);
-    await this._engine.enableVideo();
-    // await this._engine.enableAudioVolumeIndication(1, 3, true);
-    // await this._engine.enableAudio();
-    // await this._engine.enableLocalAudio(true);
+    const {appId} = AccountConfig;
+    let that = this;
+    that._engine = await RtcEngine.create(appId);
+    await that._engine.enableVideo();
+    await this._engine.enableAudioVolumeIndication(200, 3, true);
+    await this._engine.enableAudio(true);
+    // await that._engine.enableLocalAudio(false);
+    // await this._engine.disableAudio();
+    // await this._engine.muteLocalAudioStream(true);
     that.startListenerAndJoin();
   }
 
   startListenerAndJoin() {
-    this._engine.addListener('Warning', warn => {
-      console.log('Warning', warn);
+    this._engine?.addListener('Warning', warn => {
+      console.log('engine Warning', warn);
     });
 
-    this._engine.addListener('Error', err => {
-      console.log('Error', err);
+    this._engine?.addListener('Error', err => {
+      console.log('engine Error', err);
     });
 
-    this._engine.addListener('UserJoined', (uid, elapsed) => {
-      console.log('UserJoined', uid, elapsed);
+    this._engine?.addListener('UserJoined', (uid, elapsed) => {
+      console.log('engine UserJoined', uid, elapsed);
       // If new user
       if (this.state.peerIds.indexOf(uid) === -1) {
         // Add peer ID to state array
@@ -54,29 +55,57 @@ class BaseClassRoomContainer extends Component {
       }
     });
 
-    this._engine.addListener('UserOffline', (uid, reason) => {
-      console.log('UserOffline', uid, reason);
+    this._engine?.addListener('UserOffline', (uid, reason) => {
+      console.log('engine UserOffline', uid, reason);
       // Remove peer ID from state array
       this.setState({
-        peerIds: this.state.peerIds.filter((id) => id !== uid)
+        peerIds: this.state.peerIds.filter(id => id !== uid),
       });
     });
 
     // If Local user joins RTC channel
-    this._engine.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
-      console.log('JoinChannelSuccess', channel, uid, elapsed);
+    this._engine?.addListener('JoinChannelSuccess', (channel, uid, elapsed) => {
+      console.log('engine JoinChannelSuccess', channel, uid, elapsed);
       // Set state variable to true
       this.setState({
         isJoined: true,
       });
     });
 
-    this._engine?.addListener('AudioVolumeIndication', (speakers, totalVolume) => {
-        console.log('AudioVolumeIndication', totalVolume, speakers);
+    this._engine?.addListener(
+      'AudioVolumeIndication',
+      (speakers, totalVolume) => {
+        console.log('engine AudioVolumeIndication', totalVolume, speakers);
+        let localSpeaker = speakers.filter(speaker => speaker.uid == 0)[0];
+        if (localSpeaker == undefined) {
+          return;
+        }
+        this.setState({
+          localVolumeValue: localSpeaker.volume / 255,
+        });
     });
 
     // Join Channel using null token and channel name
-    this._engine.joinChannel(config.token, config.channelName, null, 0);
+    this._engine?.joinChannel(
+      AccountConfig.token,
+      AccountConfig.channelName,
+      null,
+      0,
+    );
+  }
+
+  muteLocalAudio(mute: boolean) {
+    this._engine?.muteLocalAudioStream(mute);
+    this.setState({
+      localAudioMute: mute,
+    });
+  }
+
+  muteLocalVideo(mute: boolean) {
+    this._engine?.muteLocalVideoStream(mute);
+    this.setState({
+      localVideoMute: mute,
+    });
   }
 
   renderLocalView() {
@@ -85,39 +114,39 @@ class BaseClassRoomContainer extends Component {
       return (
         <RCTRenderView
           style={styles.student}
-          channelName={config.channelName}
+          channelName={AccountConfig.channelName}
+          // uid={undefined}
+          volumeProgress={this.state.localVolumeValue}
         />
       );
     }
-    return (<View style={styles.student} />);
+    return <View style={styles.student} />;
   }
 
-    renderWhiteBoard() {
-        return (<WhiteBoardView style={styles.whiteBorder} />);
-    }
+  renderWhiteBoard() {
+    return <WhiteBoardView style={styles.whiteBorder} />;
+  }
 
-    render() {
-        return (
-            <View style={styles.container} >
-                {this.renderWhiteBoard()}
-                <ScrollView
-                    style={styles.studentContainer}
-                    contentContainerStyle={styles.padding}
-                    horizontal={false}
-                >
-                    {this.renderLocalView()}
-                    {this.state.peerIds.map((value) => {
-                        return (<RCTRenderView
-                            key={value}
-                            style={styles.student}
-                            uid={value}
-                            channelName={config.channelName}
-                        />);
-                    })}
-                </ScrollView> 
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.renderWhiteBoard()}
+        <ScrollView
+          style={styles.studentContainer}
+          contentContainerStyle={styles.padding}
+          horizontal={false}>
+          {this.renderLocalView()}
+          {this.state.peerIds.map(value => {
+            return (<RCTRenderView
+                key={value}
+                style={styles.student}
+                uid={value}
+                channelName={AccountConfig.channelName}
+              />);})}
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -145,7 +174,3 @@ const styles = StyleSheet.create({
 });
 
 export default BaseClassRoomContainer;
-    function renderWhiteBoard() {
-        throw new Error('Function not implemented.');
-    }
-
