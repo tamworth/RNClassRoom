@@ -73,17 +73,31 @@ const RCTRenderView: React.FC<Props> = ({
   };
 
   const _renderBottom = () => {
-    let progress = volumeProgress == undefined ? 0.5 : volumeProgress;
-    let height = 10 * progress;
-    let top = 4 + (10 - height);
-    let additionStyle1 = {
-      top: top,
-      height: height,
-    };
+    var progress = volumeProgress == undefined ? 0 : volumeProgress;
+    //TODO: add scale factor looks good
+    progress = progress * 1.2;
+    var heightVal = 10 * progress;
+    var additionStyle1 = {};
+    let borderRadiusVal = 5;
+    if (heightVal > 8) {
+      heightVal = 10;
+      additionStyle1 = {
+        borderRadius: borderRadiusVal,
+      };
+    } else if (heightVal < 2) {
+      heightVal = 0;
+    } else {
+      heightVal = Math.max(Math.min(heightVal, 8), 2);
+      additionStyle1 = {
+        borderBottomLeftRadius: borderRadiusVal,
+        borderBottomRightRadius: borderRadiusVal,
+      };
+    }
+    let topVal = 10 - heightVal;
     let additionStyle2 = {
-      borderRadius: 5,
+      top: 4 + topVal,
+      height: heightVal,
     };
-    var additionStyle = progress < 1 ? additionStyle1 : additionStyle2;
     return (
       <View style={styles.bottom}>
         <Image
@@ -91,7 +105,7 @@ const RCTRenderView: React.FC<Props> = ({
           source={require('./resource/ic_mic_status_on.png')}
         />
         <Text style={styles.text}>{'sheen'}</Text>
-        <View style={[styles.volume, additionStyle]} />
+        <View style={[styles.volume, additionStyle1, additionStyle2]} />
       </View>
     );
   };
@@ -133,14 +147,12 @@ const styles = StyleSheet.create({
   },
   volume: {
     position: 'absolute',
-    top: 4,
     left: 7,
-    height: 10,
     width: 6,
     backgroundColor: '#00ff00AA',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
   },
 });
 
 export default RCTRenderView;
+
+
