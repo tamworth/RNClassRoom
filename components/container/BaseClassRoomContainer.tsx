@@ -75,7 +75,7 @@ class BaseClassRoomContainer extends Component {
     this._engine?.addListener(
       'AudioVolumeIndication',
       (speakers, totalVolume) => {
-        console.log('engine AudioVolumeIndication', totalVolume, speakers);
+        // console.log('engine AudioVolumeIndication', totalVolume, speakers);
         let localSpeaker = speakers.filter(speaker => speaker.uid == 0)[0];
         if (localSpeaker == undefined) {
           return;
@@ -109,7 +109,7 @@ class BaseClassRoomContainer extends Component {
   }
 
   renderLocalView() {
-    console.log('isJoined', this.state.isJoined);
+    // console.log('isJoined', this.state.isJoined);
     if (this.state.isJoined) {
       return (
         <RCTRenderView
@@ -124,7 +124,14 @@ class BaseClassRoomContainer extends Component {
   }
 
   renderWhiteBoard() {
-    return <WhiteBoardView style={styles.whiteBorder} />;
+    return (
+      <WhiteBoardView
+        style={styles.whiteBorder}
+        whiteBoardId={AccountConfig.whiteBoardAppId}
+        roomUuid={AccountConfig.whiteBoardRoomId}
+        roomToken={AccountConfig.whiteBoardRoomToken}
+      />
+    );
   }
 
   render() {
