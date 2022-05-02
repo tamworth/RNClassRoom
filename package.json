@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build:base:ios": "react-native bundle --platform ios --dev false --entry-file common-entry.js --bundle-output dist/base/common.ios.bundle --assets-dest dist/base --config ./metro.base.config.js  --reset-cache  && node ./compile/split-common.js dist/base/common.ios.bundle",
+    "build:render:ios": "react-native bundle --platform ios --dev false --entry-file ./components/widgets/RCTRender.js --bundle-output dist/room/render.ios.bundle --assets-dest dist/room --config ./metro.components.config.js  --reset-cache && node ./compile/split-common.js dist/room/render.ios.bundle",
+    "build:whiteboard:ios": "react-native bundle --platform ios --dev false --entry-file ./components/widgets/WhiteBoard.js --bundle-output dist/room/whiteboard.ios.bundle --assets-dest dist/room --config ./metro.components.config.js  --reset-cache && node ./compile/split-common.js dist/room/whiteboard.ios.bundle",
+    "build:room:ios": "react-native bundle --platform ios --dev false --entry-file index.js --bundle-output dist/room/room.ios.bundle --assets-dest dist/room --config ./metro.room.config.js  --reset-cache",
+    "build:ios": "npm run build:base:ios && npm run build:whiteboard:ios && npm run build:render:ios && npm run build:room:ios",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

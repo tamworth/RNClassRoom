@@ -13,6 +13,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3002EBEC2819345D0001293C /* RCTAgoraWhiteBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3002EBEB2819345D0001293C /* RCTAgoraWhiteBoardView.m */; };
+		304CDFF3281AE97900C5AA19 /* BridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 304CDFF0281AE97900C5AA19 /* BridgeManager.m */; };
+		304CDFF5281AEBAE00C5AA19 /* common.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 304CDFF4281AEBAE00C5AA19 /* common.ios.bundle */; };
+		304CDFF7281AEBC000C5AA19 /* room.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 304CDFF6281AEBC000C5AA19 /* room.ios.bundle */; };
+		304CDFFA281AEC2600C5AA19 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304CDFF9281AEC2600C5AA19 /* HomeViewController.m */; };
+		304CDFFD281BAB5B00C5AA19 /* whiteboard.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 304CDFFB281BAB5B00C5AA19 /* whiteboard.ios.bundle */; };
+		304CDFFE281BAB5B00C5AA19 /* render.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 304CDFFC281BAB5B00C5AA19 /* render.ios.bundle */; };
 		30835F232819052900216938 /* RCTAgoraWhiteBoardViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30835F222819052900216938 /* RCTAgoraWhiteBoardViewManager.m */; };
 		7699B88040F8A987B510C191 /* libPods-RNClassRoom-RNClassRoomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-RNClassRoom-RNClassRoomTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -41,6 +47,15 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-RNClassRoom-RNClassRoomTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNClassRoom-RNClassRoomTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3002EBEA2819345D0001293C /* RCTAgoraWhiteBoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTAgoraWhiteBoardView.h; sourceTree = "<group>"; };
 		3002EBEB2819345D0001293C /* RCTAgoraWhiteBoardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTAgoraWhiteBoardView.m; sourceTree = "<group>"; };
+		304CDFF0281AE97900C5AA19 /* BridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeManager.m; sourceTree = "<group>"; };
+		304CDFF1281AE97900C5AA19 /* RCTBridge+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTBridge+Extension.h"; sourceTree = "<group>"; };
+		304CDFF2281AE97900C5AA19 /* BridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeManager.h; sourceTree = "<group>"; };
+		304CDFF4281AEBAE00C5AA19 /* common.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = common.ios.bundle; path = ../dist/base/common.ios.bundle; sourceTree = "<group>"; };
+		304CDFF6281AEBC000C5AA19 /* room.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = room.ios.bundle; path = ../dist/room/room.ios.bundle; sourceTree = "<group>"; };
+		304CDFF8281AEC2600C5AA19 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = RNClassRoom/HomeViewController.h; sourceTree = "<group>"; };
+		304CDFF9281AEC2600C5AA19 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = RNClassRoom/HomeViewController.m; sourceTree = "<group>"; };
+		304CDFFB281BAB5B00C5AA19 /* whiteboard.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = whiteboard.ios.bundle; path = ../dist/room/whiteboard.ios.bundle; sourceTree = "<group>"; };
+		304CDFFC281BAB5B00C5AA19 /* render.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = render.ios.bundle; path = ../dist/room/render.ios.bundle; sourceTree = "<group>"; };
 		30835F212819052900216938 /* RCTAgoraWhiteBoardViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTAgoraWhiteBoardViewManager.h; sourceTree = "<group>"; };
 		30835F222819052900216938 /* RCTAgoraWhiteBoardViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTAgoraWhiteBoardViewManager.m; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RNClassRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNClassRoom.debug.xcconfig"; path = "Target Support Files/Pods-RNClassRoom/Pods-RNClassRoom.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,6 +107,13 @@
 		13B07FAE1A68108700A75B9A /* RNClassRoom */ = {
 			isa = PBXGroup;
 			children = (
+				304CDFF8281AEC2600C5AA19 /* HomeViewController.h */,
+				304CDFF9281AEC2600C5AA19 /* HomeViewController.m */,
+				304CDFF6281AEBC000C5AA19 /* room.ios.bundle */,
+				304CDFFC281BAB5B00C5AA19 /* render.ios.bundle */,
+				304CDFFB281BAB5B00C5AA19 /* whiteboard.ios.bundle */,
+				304CDFF4281AEBAE00C5AA19 /* common.ios.bundle */,
+				304CDFEF281AE97900C5AA19 /* Core */,
 				30835F20281903D600216938 /* WhiteBoard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -111,6 +133,17 @@
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-RNClassRoom-RNClassRoomTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		304CDFEF281AE97900C5AA19 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				304CDFF0281AE97900C5AA19 /* BridgeManager.m */,
+				304CDFF1281AE97900C5AA19 /* RCTBridge+Extension.h */,
+				304CDFF2281AE97900C5AA19 /* BridgeManager.h */,
+			);
+			name = Core;
+			path = RNClassRoom/Core;
 			sourceTree = "<group>";
 		};
 		30835F20281903D600216938 /* WhiteBoard */ = {
@@ -262,6 +295,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				304CDFF7281AEBC000C5AA19 /* room.ios.bundle in Resources */,
+				304CDFFE281BAB5B00C5AA19 /* render.ios.bundle in Resources */,
+				304CDFF5281AEBAE00C5AA19 /* common.ios.bundle in Resources */,
+				304CDFFD281BAB5B00C5AA19 /* whiteboard.ios.bundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,8 +468,10 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				304CDFF3281AE97900C5AA19 /* BridgeManager.m in Sources */,
 				3002EBEC2819345D0001293C /* RCTAgoraWhiteBoardView.m in Sources */,
 				30835F232819052900216938 /* RCTAgoraWhiteBoardViewManager.m in Sources */,
+				304CDFFA281AEC2600C5AA19 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
