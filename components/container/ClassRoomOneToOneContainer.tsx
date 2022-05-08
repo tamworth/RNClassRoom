@@ -11,7 +11,7 @@ import DynamicComponent from '../dynamic/dynamic-component';
 class ClassRoomOneToOneContainer extends BaseClassRoomContainer {
 
     render(): JSX.Element {
-        return <DynamicComponent __id="counter" />
+        return <DynamicComponent __id="rtc-render" />
     }
 }
 
