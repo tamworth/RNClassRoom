@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState }  from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import {RtcChannel, RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
+import {RtcLocalView, RtcRemoteView, VideoRenderMode} from 'react-native-agora';
 
 interface Props {
   style: StyleProp<ViewStyle>;
-  uid: String;
-  channelName: String;
+  uid: number;
+  channelName: string;
   volumeProgress: number;
   videoMute: boolean;
 }
@@ -22,36 +22,7 @@ const RCTRenderView: React.FC<Props> = ({
   uid,
   channelName,
   volumeProgress,
-  videoMute,
 }) => {
-  // const _channel = useRef<RtcChannel | null>(null);
-
-  // useEffect(() => {
-  //   /**
-  //    * @name init
-  //    * @description Function to initialize the Rtc Engine, attach event listeners and actions
-  //    */
-  //   const init = async () => {
-  //     console.log("rct render view init");
-  //     // is local render
-  //     if (uid == undefined) {
-  //       return;
-  //     }
-  //     // _channel.current = await RtcChannel.create(uid);
-  //     // // await _channel.current.enableVideo();
-  //     // _channel.current.addListener('Warning', (warn) => {
-  //     //   console.log('channel Warning', warn);
-  //     // });
-
-  //     // _channel.current.addListener('Error', (err) => {
-  //     //   console.log('channel Error', err);
-  //     // });
-
-  //     // _channel.current.
-  //   };
-  //   init();
-  // }, []);
-
   const _renderLocalVideos = () => {
     return (
       <RtcLocalView.SurfaceView
@@ -67,9 +38,10 @@ const RCTRenderView: React.FC<Props> = ({
         style={styles.render}
         uid={uid}
         channelId={channelName}
-        renderMode={VideoRenderMode.Hidden} 
+        renderMode={VideoRenderMode.Hidden}
         // zOrderMediaOverlay={true}
-      />);
+      />
+    );
   };
 
   const _renderBottom = () => {
@@ -154,5 +126,3 @@ const styles = StyleSheet.create({
 });
 
 export default RCTRenderView;
-
-

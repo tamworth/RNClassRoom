@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, ViewStyle, StyleProp} from 'react-native';
+import {StyleSheet, ViewStyle, StyleProp} from 'react-native';
 import AgoraWhiteBoardView from '../native/AgoraWhiteBoardView';
 
 interface Props {
   style: StyleProp<ViewStyle>;
-  whiteBoardId: String;
-  roomUuid: String;
-  roomToken: String;
+  whiteBoardId: string;
+  roomUuid: string;
+  roomToken: string;
 }
 
 const WhiteBoardView: React.FC<Props> = ({

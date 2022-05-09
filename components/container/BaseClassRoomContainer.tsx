@@ -4,13 +4,21 @@ import RCTRenderView from '../widgets/RCTRenderView';
 import WhiteBoardView from '../widgets/WhiteBoardView';
 import AccountConfig from '../config/AccountConfig';
 
-
 import RtcEngine from 'react-native-agora';
 
-class BaseClassRoomContainer extends Component {
-  _engine: RtcEngine | undefined;
+export interface Props {}
+export interface State {
+  isJoined: boolean;
+  peerIds: [String];
+  localAudioMute: boolean;
+  localVideoMute: boolean;
+  localVolumeValue: number;
+}
 
-  constructor(props) {
+class BaseClassRoomContainer extends Component<Props, State> {
+  _engine?: RtcEngine | undefined;
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       isJoined: false,

@@ -1,7 +1,7 @@
 const AccountConfig = {
   appId: '09c93e011d934eb0b4b71b5d8a4d3c4a',
   token:
-    '00609c93e011d934eb0b4b71b5d8a4d3c4aIACcJZaFhp6Yzb+3d2zcFywb2UAgMgf5dYFZp0UxC1V6AvLWKwwAAAAAEADQ1fuzGoBpYgEAAQAagGli',
+    '00609c93e011d934eb0b4b71b5d8a4d3c4aIACgL96HBNu+NNedgwVpphxnkWnnn6AOpJvNtIvh/z250/LWKwwAAAAAEAD+UwYDcTt5YgEAAQBxO3li',
   channelName: 'sheenrn',
   whiteBoardAppId: '646/P8Kb7e_DJZVAQw',
   whiteBoardRoomId: 'ef1bd040c56c11ecbf5dff75f8a5dd56',
